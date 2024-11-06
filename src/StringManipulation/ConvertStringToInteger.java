@@ -17,7 +17,9 @@ package StringManipulation;
 public class ConvertStringToInteger {
 
     int atoIConverter(String input){
-        int result = 0;
+
+        int maxInt = Integer.MAX_VALUE;
+        int minInt = Integer.MIN_VALUE;
 
         input = input.trim();
         if(input.isEmpty()){
@@ -36,30 +38,32 @@ public class ConvertStringToInteger {
         }
 
         //parse the digits
-        while(){}
+        int num = 0;
+        while(index < input.length() && Character.isDigit(input.charAt(index))){
+            int digit = input.charAt(index) - '0';  // we need to subtract '0' to convert from ASCII to Integer. eg. '5' - '0' results in 53 - 48, which equals 5
 
+            //check overflow condition
+            if(num > (maxInt - digit )/ 10){
+                return sign == 1 ? maxInt : minInt;
+            }
 
+            num = num * 10 + digit;
+            index++;
+        }
 
-
-
-        result = Integer.valueOf(input);
-        
-        
-
-        return result;
-
+        return sign * num;      
     } 
 
 
     public static void main(String[] args) {
         ConvertStringToInteger atoI = new ConvertStringToInteger();
-        System.out.println(atoI.atoIConverter("42"));
-        System.out.println(atoI.atoIConverter("  -42"));
-        System.out.println(atoI.atoIConverter("4193 with words"));
-        System.out.println(atoI.atoIConverter("words and 987"));
-        System.out.println(atoI.atoIConverter("-91283472332"));
-        System.out.println(atoI.atoIConverter("2147483648"));
-        System.out.println(atoI.atoIConverter(" "));
+        System.out.println(atoI.atoIConverter("42"));  //op - 42
+        System.out.println(atoI.atoIConverter("  -42")); //op - -42
+        System.out.println(atoI.atoIConverter("4193 with words")); //op - 4193
+        System.out.println(atoI.atoIConverter("words and 987")); //op - 0
+        System.out.println(atoI.atoIConverter("-91283472332")); // op - -2147483648
+        System.out.println(atoI.atoIConverter("2147483648")); //op - 2147483647
+        System.out.println(atoI.atoIConverter(" ")); //op - 0
 
     }
     
