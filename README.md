@@ -1,18 +1,82 @@
-## Getting Started
+Here's a breakdown of what is intened out of this repository. 
+        -- I am a senior backend developer with specialization in java, springboot, aws. I've divided the tech and given them some weightage based on the demand and typical importance for each skill required in the market. 
+        -- I will be creating some content around the topics and there weights that will reflect my preparation for the interviews.
+        -- I will also write some core concepts here as we move ahead with preparations of our topics.
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Here's a division of the skills out of the scale of 100%
 
-## Folder Structure
+1. Java (Core and Advanced) - 30%
+    - You'll need a solid understanding of OOP Principles, multi-threading, collections, streams and Java's newer features.
 
-The workspace contains two folders by default, where:
+2. Spring Boot - 25%
+    - Mastering spring boot annotations, dependency injection, AOP, spring security and spring data.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+3. Databases (SQL and NoSQL) - 15%
+    - for that flavour of a balanced profile
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+4. Microservices - 15%
+    - service decomposition, inter-service communication, API gateway design and more
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+5. AWS - 15%
+    - critical for scalable and distributed systems, knowledge of core AWS Services (EC2, S3, RDS, Lambda etc)
 
-## Dependency Management
+6. Bonus section (No weightage tools)
+    - CICD tools, Git, and add ons like terraform, kafka, splunk etc.
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+======================================================================================================================
+
+I am going to divide Java and Spring boot into further segments, as they cover more than 50% on there own.
+
+A. Java (Core and Advanced) - 100%
+
+1. OOP Principles and Design Patterns - 25%
+    - Mastering these two are must to write clean code. 
+
+2. Collection Framework - 20%
+    - For all that data manipulation, lists, sets, maps and queues along with performance implications is importance. 
+      you got to be able to play with the data all they way you want. Remember client applications are grumpy about the way they receive the data.
+
+3. Java Streams and Lambda Expressions - 15%
+   - You should be able to handle large data sets, to do that you should know how to use map, filter, reduce and method references.
+
+4. Concurrency & Multithreading - 15%
+    - Threads, synchronization, executors, callable, future, all of them are essential for performance in multi-threaded env.
+    - java.util.concurrent package 
+
+5. Memory Management & Garbage Collection - 10%
+    - Learn all there is to learn about this
+
+6. Exception Handeling - 10%
+    - checked vs. unchecked exceptions.
+    - best practices in error handeling
+
+7. JVM Internals - 5%
+    - Class loader, heap, stack and about execution of bytecode
+
+----------------------------------------------------------------------------------------------------------------------------
+
+B. Spting Boot - 100%
+
+1. Spring Core (Dependency Injection, IOC) - 25%
+    - How to use DI and IOC
+    - understanding annotations like @component, @Autowired, @Bean and @Configuration
+
+2. Spring Boot Annotations and Configurations - 20%
+    - @SpringBootApplication, @ConfigurationProperties, @Value @ExceptionHandler and all more of these annotations
+    - ApplicationContext, Beanfactory, YAML properties and other terminologies and there working
+
+3. REST APIs (Spring MVC) - 15%
+    - @RestController, @RequestMapping, @GetMapping, @PostMapping nad working with JSON
+
+4. Spring Security - 10%
+    - Basic Authentication and Authorization
+    - JWT and role-based access control
+    - working with restricted and sensitive data with spring security
+
+5. Microservices support (Eureka, Feign, Hystrix whichever applicable)
+    - service discovery
+    - Feign for rest clietns
+    - Resiliency and circuit breaking with spring
+
+6. Testing (JUnit, Mockito) - 5%
+    - How to test spring boot components
