@@ -1,0 +1,143 @@
+Memory types - Stack and heap created by JVM.
+Stack Memory :
+-------------
+ - Store temporary variables, separate memory block for method
+ - Store primitive data types, int, boolean, char etc.
+ - Store reference of heap objects -> Strong, weak, soft references
+ - Each thread has its own stack memory
+ - throws java.lang.StackOverflowException whenever stack is full
+ - Whenever a method encounters "}" in execution, block/stack memory allocated to that method is cleared.
+
+Heap Memory :
+------------
+ - Store objects
+ - GC is used to delete unreferenced objects
+ - Mark and Sweep Algorithm -> Types of GC -> Single, Parallel, CMS(Concurrent Mark and Sweep), G1, ZGC
+ - Heap Memory is shared with all the threads
+ - Contains String constant pool
+ - throws java.lang.OutOfMemoryException when full
+
+Heap is further divided into:
+    1. Young Generation (Minor GC Happens here)
+        1.1 Eden
+        1.2 Survivor
+    2. Old Generation (Major GC Happens here)
+    3. Permanant Generation
+
+============================================================================================
+
+1. Strong reference -> Person obj = new Person(); //GC will not remove obj  
+2. Weak reference   -> WeakReference<Person> weakObj = new WeakReference<Person>(new Person);
+                       GC will remove weakObj in next cleanup
+                       whenever weakObj is referenced, null will be returned
+3. Soft reference   -> GC is allowed to free the memory but do it when it is very urgent and no more memory is available
+
+============================================================================================
+
+Young Generation -> Eden Space -> S0 Space -> S1 Space
+ex. 
+you created 5 objects, All are placed in Eden Space
+GC comes with Mark & Sweep -> clears unreferenced objects and move the remaining objects into one of the S0 or S1
+Eden Space is now free, while objects moved into S0 or S1 gets their Age++
+This is called Minor GC
+--------------------------------------------------------------------
+
+Major GC 
+ex. 
+There is a threshold on Age of object, when any object survives till the max age of threshold,
+the object is promoted and moved into Old Generation space.
+Old Generation has Less Frequency of GC run. and usually is time taking thus called Major GC.
+
+--------------------------------------------------------------------
+Meta Space
+Store metadata, constants, jvm loads some class information here.
+
+============================================================================================
+
+Garbage Collection Algorithms
+- GC is very expensive :- "World Stops When Garbage Collection Runs", meaning application threads are paused when GC is in run
+- Mark and Sweep, Cocurrent Mark and Sweep, Mark and Sweep with Compaction
+
+GC Series and their evolution with java
+---------------------------------------
+
+Java 6 -> Serial GC (-XX:+UseSerialGC) -> Single threaded, suitable for smaller application
+          Paralle GC (Experimental)    -> Multithreaded, maximize the application's CPU usage rather than minimizing pause times
+
+Java 8 -> Parallel GC (Default) -> Parallel Minor GC wih multiple threads,
+          CMS GC -> performs most of its work concurrently, minimizing pauses
+          G1 (Experimental) -> *G1 divides the heap into regions and allows for more granular collection*
+
+Java 11 -> G1 (Default) -> ZGC (Experimental)
+
+Java 17 -> G1 (Default) -> ZGC (Production Ready) -> Shenandoah GC(Optional)
+
+Java 21 (2023) -> G1 (Default) -> ZGC (Stable) -> Genrational ZGC (Experimental)
+
+=============================================================================================
+
+Evolution of G1 From Java 8 to Java 21
+
+Java 8 LTS 
+ - Introduced as an alternative to CMS 
+ - aimed to provide predictable low-pause times
+ - handle large heaps by dividing into smaller, manageable regions instead of monolithic generations
+ - Region-Based Heap Management
+     - G1 divides the heap into regions (usually 1-32 MB) rather than large contiguous spaces.
+     - This structure helps with incremental collection, collecting only a subset of regions each time, rather than stopping the entire application.
+
+Java 9 and 10
+ - Improvements in Full GC
+    - Full GCs were made less frequent by optimizing the memory management in G1
+ - Parallel Full GC
+    - Full garbage collection processes faster by using multiple threads for compaction
+
+Java 11 (2018) LTS
+ - Made G1 as a default GC replacing Parelle GC
+ - Reduced Full GC Impact - Optimization in region management and incremental cleanup
+ - Improved Compaction and Concurrent Processing
+    - region-based compaction
+    - better handle fragmentation in large heaps
+    - allocate large objects more efficiently
+
+Java 12
+ - Abortable Mixed Collections
+    - ability to interrupt mixed collections if they exceeded the pause time target
+    - stay within desired pause times more consistently
+
+Java 13
+ - Concurrent Class Unloading
+    - G1 gained support for unloading unused classes concurrently with application threads
+    - freeing memory without causing a stop-the-world pause
+
+Java 14
+ - NUMA Awareness (Non Uniform Memory Access)
+    - G1 became aware of NUMA, improving memory allocation on systems with multiple CPU nodes
+
+ Java 15
+ - Idle-Time Garbage Collection
+    - Enabled G1 to run low-impact garbage collections during idle times
+    - Reducing memory usage when the application was not actively running
+
+Java 16
+ - Improved Young Generation Sizing
+    - adjusted the young generation size based on recent allocation rates
+
+Java 17 LTS 
+ - Key Feature -> 
+    *More Efficient for applications with Large Heaps (Modern Hardware)
+    *Variying Workloads (High and Low memory/cpu utilization)
+
+ - Optimized Concurrent Refinement
+    - refinement process, which helps update references between regions.
+    - reducing the time and CPU required to keep these references up-to-date.
+
+ - Enhanced Large Object Handling (objects exceeding the typical region size)
+    - allowing for better heap utilization and reduced fragmentation
+ 
+ - Improved Predictability and Pause Time Control
+    - Improved G1’s suitability for latency-sensitive applications
+
+ - Better Region Reclamation and Compaction
+    - optimize how it reclaimed and compacted regions.
+    - made these processes faster, minimizing long pauses and making G1 better suited to both throughput-oriented and low-latency applications
