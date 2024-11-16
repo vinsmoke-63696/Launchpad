@@ -1,0 +1,130 @@
+A distributed event-streaming platform designed for high throughput, fault tolerent, handeling of real time data-feeds.
+Provides communication between producers and consumers via distributed systems.
+
+Core components of kafka :-
+1. Topic -> Logical channel where events are published by producers and consumed by consumers.
+            Each topic is divided into Partitions for scalabillity.
+
+2. Producers -> Producers are client applications that published data/events to kafka topics
+                Producers can assign data specific partition either manually or using partitioning logic (round-robin, hashing keys etc)
+
+3. Consumers -> Consumers are client applications that subscribe to topic and consume the data/events.
+
+4. Brokers -> Broker is a kafka server that serves requests from producer and consumers. Producers push the events to broker whereas
+              Consumers pull the events from the broker. Thus broker act as an intermediate.
+
+5. Partitions & Offset -> Partition is a topic divided into multiple segments allows parallel processing.
+                          Offset is a unique id assigned to each event when produced.
+
+6. Zookeper -> Manages cluster metadata, leader election, configuration and has control over the cluster.
+               Version 2.8 onwards zookeeper is transitioned into Quourum Controller
+
+=============================================================================================
+
+How consumer works internally :- following steps are involved in event consumption
+1. Group Co-ordination
+2. Partition Assignment
+3. Polling
+4. Offset Management
+5. Rebalancing
+
+Once consumer is subscribed to a topic below things happens.
+
+1. Group coordination -> Each consumer group is assigned with group id. Kafka partition is assigned to 1 consumer within a group.
+                        1-1 mapping between partition and consumer.
+                        Allows parallel processing and automatic failover if a consumer is crashed.
+
+2. Partition Assignment and Rebalancing -> Partition is assigned to a consumer based on "Partition Assignment Strategy".
+                        Default strategy is "RangeAssignor" Assigns consecutive partitions to each consumer in the group.
+                        
+                        Rebalancing -> When new consumer joins or leaves kafka triggers Rebalancing mechanism to Redistribute partitions.
+                        This ensures that Load is distributed evenly across available consumers.
+                        During Rebalancing the consuming stops temporarily
+
+3. Polling -> Consumers use Poll() method periodically to get the events. This method initiates a request to broker to retrieve available
+                        events. You can pass a Duration.ofMillis(10ms) to fetch events in the poll method.
+
+4. Offset Management -> Each event in kafka partition has a unique offset, acts as an Identifier. Consumer use offset to keep track
+                        of last event they processed.
+        commit-offset ->After processing a event, consumer commits the 'offset' to mark the event as processed.
+        enable.auto.commit = true -> kafka automatically commits offset after regular interval (usually after poll() is executed)
+        enable.auto.commit = false-> Application explicitely commits offset. uses commitSync() commitAsync() after processing event.
+
+5. Message Deserialization -> events are stored in byte array, so consumer uses deserializer to convert bytes to usable objects.
+
+Summery of consumer flow ->
+1. Start -> Consumer subscribes a topic, joins the consumer group and waits for partition Assignment
+2. Poll  -> Consumer repetedly calls poll(), receiving records from its assigned partition.
+3. process and commit offset -> after processing commits offset to keep track
+4. Handle Rebalncing -> When rebalancing occurs, consumer temporarily stops polling, receives new partitions and start consuming.
+5. Shutdown -> When closing, consumer sends a leave request to the group, triggering rebalance to reassign its own partitions to others.
+
+=============================================================================================
+
+How producers works internally :- following steps are involved in event Production
+1. Partitioning and Record routing
+2. Serialization of data
+3. Sending data to broker
+4. Acknowledgement and Reliability mechanism
+5. Error handling, Async send model, Threading & Concurrency
+
+Producers use PUSH Based model, they push the data to broker instead of waiting for a request from broker.
+
+1. Partitioning and Record Routing -> Producer needs to know which partition of the topic the event needs to be pushed.
+                                      This is critical for load balancing and ordering.
+            Partition key -> if key is specified with the event, kafka uses partitioning algorithm to map the key to specific partiton.
+            Round-Robin   -> if key is not specified, producer uses round-robin to distribute events evenly across partitions.
+
+2. Serialization -> kafka stores data as byte array, so producer needs to convert object into byte array before sending to kafka
+                    Producer uses serializer (StringSerializer, or custom serializer)
+            Batching -> When producer has multiple events for same partition, it uses Batching.
+                        Batches are sent on condition of batch size (batch.size) or certain time passes (linger.ms)
+
+3. Sending data to broker -> Each partiton has a designated leader broker, producers interact only with leader brokers.
+            Metadata -> Producers periodically fetches metadata from kafka to know which brokers are leaders for each partition.
+                        Metadata is cached, and if there is change in cluster (eg. new partition joins, or broker crashed),
+                        Producer updates its metadata.
+
+4. Acknowledgement and Reliability Mechanism -> Producers uses Acknowledgement settings (acks) to control reliability of message delivery.
+            acks = 0 -> Producers don't wait for Acknowledgement, Fast but not reliable
+            acks = 1 -> Producers waits for acknowledgement from the partition leader only. Moderate reliability, if leader fails before replicating, data may get lost
+            acks = all or (acks = -1)-> Producers waits for acknowledgement from all "in-sync replicas". Provides highest reliability.
+
+5. Error Handeling
+            Network error -> Producer automatically retries producing events based on retry configuration
+            Permanant Failure -> Eg. Authentication Failure -> Stops producing event and may throw OutOfMemoryException
+             
+6. Async Send Model -> uses I/O thread that is separate from application thread, does not block main thread.
+                       When Send() is called, immediately returns a Future Object. This allow application to continue working
+                       while producer sends the message in the background.
+                       Future can be used to check result of the send operation later on attach a callback for success or Failure
+7. Threading & Concurrency -> Uses single threaded architecture.
+                              Internally uses background I/O thread, that manages batching, metadata refresh and sending data to broker.
+                              This thread allows application thread to remain responsive.
+
+Summery of Producer Flow ->
+1. Initialize Producer -> configure properties like bootstrap.servers,acks and serializers
+2. Partion and Serialize -> Each event is serialized and assigned to partition
+3. Batch and Send -> events are batched and sent in async
+4. Receive Acknowledgements -> Producer received acks from broker basedn on acks settings
+5. Retry and Error Handeling ->In case of failures, retries are handled automatically. Callback option is also there for success/failures
+6. Shutdown -> Flush remaining events and close resources, ensure proper cleanup.
+
+=============================================================================================
+
+How to re-consumed events ?
+-> You have to reset the offset by auto.offset.reset property :
+    1. Earliest -> Consumer will reset the offset to the earliest/first available event. (I.e Consume from beginning)
+    2. Latest -> Consumer will reset the offset to the latest available event. (I.e Consume only new events)
+    3. Manual Resetting offset -> Seek() method, consumer.Seek(new TopicPartitionOffset(partition, Offset.Beginning));
+
+How kafka duplicates events in the event of broker crash ?
+-> There is a leader broker that manages communication between producer and consumers. and there are follower brokers.
+   follower brokers are in-sync with leader broker. they maintain the copies of the partitions and events.
+   When leader broker goes down, zookeepr get the notification, he then promotes one of the in-sync follower broker to the leader broker.
+   Once promoted, producers and consumers fetches metadata about this new broker and continues communication with it.
+
+Default event SLA in topic is 7 days. Can be configured with log.retention.ms
+
+
+
