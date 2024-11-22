@@ -23,3 +23,7 @@ Types of threads in java
 
 Based on Priority :
     1. Ranges from 1 to 10, where 1 = MIN_PRIORITY and 10 = MAX_PRIORITY
+
+=============================================================================================
+
+Tools for thread management

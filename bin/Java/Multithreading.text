@@ -1,0 +1,29 @@
+Threads allows a program to operate more efficiently by doing multiple things at same time. Can be used to performs
+complicated tasks in the background without interupting main program.
+
+1. Types of threads.
+2. Tools for thread management.
+3. Challanges in threading.
+
+=============================================================================================
+
+Types of threads in java 
+1. Based on Origin :
+    1. User Thread -> created by application developer, managed by JVM, can perform application level tasks.
+    2. Daemon Thread -> background thread that supports other threads, eg. Garbage collector, watchdog.
+
+2. Based on Purpose :
+    1. Worker thread -> performs specific task in thread pool. Eg. executors, managed by frameworks like ExecutorService.
+    2. Main thread -> application thread or primary thread, starts the main(String[] args) method.
+    3. I/O thread -> Dedicated to handle I/O operations, useful in non-blocking i/o. eg. Java.nio package.
+
+3. Based on Lifecycle :
+    1. Short lived thread -> Can perform single task and terminate.
+    2. Long lived thread -> Remain active for longer Duration.
+
+Based on Priority :
+    1. Ranges from 1 to 10, where 1 = MIN_PRIORITY and 10 = MAX_PRIORITY
+
+=============================================================================================
+
+Tools for thread management
