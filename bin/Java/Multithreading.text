@@ -27,3 +27,46 @@ Based on Priority :
 =============================================================================================
 
 Tools for thread management
+
+1. Thread class  -> Extend any class with Thread and write implimentation of run() method
+        Methods :
+            start() -> Starts new thread and invoke run() method
+            run() -> contains the code to execute in a new thread
+            join() -> waits for the thread t complete
+            sleep(milliseconds) -> causes thread to sleep for given milliseconds
+            interrupt() -> interrupts a thread, signaling it to stop.
+
+2. Runnable Interface -> functional interface represents a task to execute. Pass the runnable object to the thread object as a task.
+
+        Class ClassName {
+            Runnable task = () -> {sout("task is running")};
+        }
+        main(){
+            ClassName instance = new ClassName();
+            Thread t1 = new Thread(instance.task);
+            t1.start();
+        }
+
+Executor 
+    Executor interface acts as a replacement for 'new Thread()' for executing task.
+    Providers single method 'void execute(Runnable command)'
+
+ExecutorService
+    Extends Executor, has more Methods
+    1. submit() -> submit task and allow retriving result using Future object
+    2. invokeAll(), invokeAny() -> for batch processing
+    3. shutdown(), shutdownNow() -> graceful shutdown
+
+Thread pool implimentation with executor ExecutorService
+    1. fixedThreadPool(n) -> fixed number of threads, used for steady workload
+            ExecutorService threadPool = Executors.newFixedThreadPool(3);     
+
+    2. cachedThreadPool() -> dynamic number of threads, used for short-lived, I/O bound tasks where task number is highly variable
+            ExecutorService threadPool = Executors.newCachedThreadPool();
+    
+    3. singleThreadExecutor() -> thread pool with single thread, sequential processing, thread safety
+            ExecutorService threadPool = Executors.newSingleThreadExecutor();
+
+    4. scheduledThreadPoo() -> thread pool that runs task periodically or after delay, cron jobs, recurring tasks
+            ExecutorService threadPool = Executors.bewScheduledThreadPoo();
+             
