@@ -1,5 +1,8 @@
 package Java.SingletonPattern;
 
+//idea is to restrict object creation using private constructor and to allow only one object creation
+//create a static method that returns object creation for you.
+
 public class Singleton {
 
     private static Singleton singleObject;
