@@ -1,4 +1,4 @@
-package Java.SingletonPattern;
+package Java.DesignPatterns.SingletonPattern;
 
 public class TestSingleton {
 

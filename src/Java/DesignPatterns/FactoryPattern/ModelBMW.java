@@ -1,4 +1,4 @@
-package Java.FactoryPattern;
+package Java.DesignPatterns.FactoryPattern;
 
 public class ModelBMW implements VehicleInterface {
 

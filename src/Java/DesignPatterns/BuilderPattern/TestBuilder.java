@@ -1,4 +1,4 @@
-package Java.BuilderPattern;
+package Java.DesignPatterns.BuilderPattern;
 
 public class TestBuilder {
 

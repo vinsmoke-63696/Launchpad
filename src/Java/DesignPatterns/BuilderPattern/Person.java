@@ -1,4 +1,4 @@
-package Java.BuilderPattern;
+package Java.DesignPatterns.BuilderPattern;
 
 //Idea is whenever you set a value to any property you return the same builder instance, so that it will have the value
 //and proceed with method chaining for next propery (this enables method chaining)
