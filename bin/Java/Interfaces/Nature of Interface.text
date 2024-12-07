@@ -24,5 +24,12 @@
 
 ===============================================================
 
-7. Default Method -> 
+7. Default methods helped in backward compatibility and providing default behavior in classes implementing the interface.
+    practical use case -> When forEach() was introduced in java 8 as part of stream API. previous interfaces such as
+    Collection, Set would break because as soon as forEach() was added, the classes that implemented Collection or Set 
+    would also required or forced to provide Implementation of forEach().
+    To avoid this, forEach was introduced as a Default Method. so classes that implemented Collection or Set did not need to
+    write Implementation of forEach(). Instead if needed those classes could override the forEach method as per their need.
+
+    By having default method, This makes it easier to evolve interfaces over time while maintaining compatibility with older code
 
