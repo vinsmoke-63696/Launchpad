@@ -1,0 +1,7 @@
+1. Types of Interfaces
+    1. Marker Interfaces          (No methods or fields)
+    2. Functional Interfaces      (1 abstract method, SAM, Single Abstract Method)
+    3. Normal Interfaces          (1 or More Abstract Methods)
+    4. Nested/Inner Interfaces    (Interface defined in another class or interface)
+    5. Tagging Interfaces         (Similar to marker interface but emphasize their purpose as identifiers)
+    6. Adapter/Callback Interface (Interface used to adapt or handle callbacks)

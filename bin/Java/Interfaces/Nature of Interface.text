@@ -1,0 +1,28 @@
+1. Nature of interface
+    1.  Abstract by Nature
+    2.  Pure Abstraction (Pre-java 8)
+    3.  Cannot be instantiated
+    4.  Achieves Multiple Inheritance
+    5.  Supports Polymorphism
+    6.  Flexibility in Implementation
+    7.  Default and Static Methods (java 8+)
+    8.  Supports Private Methods (java 9+)
+    9.  Promotes Loose Coupling
+    10. Supports Functional Programming
+    11. Inheritance in interface
+    12. Contracts for Behavior
+    13. Used in Java Frameworks - list, map, set
+
+================================================================
+
+5. Supports Polymorphism -> 
+    Interface vehicle { void buildCar();}  -> class Nano implements vehicle { public void buildCar(){sout("Nano built")}}
+                                           -> class Sumo implements vehicle { public void buildCar(){sout("Sumo built")}}
+
+    1. Vehicle is used as a "reference type" for Nano and Sumo. meaning it can hold the objects for class that implements it.
+    2. Dynamic behavior -> Even though reference type is vehicle. The Actual method is executed based on runtime execution.
+
+===============================================================
+
+7. Default Method -> 
+

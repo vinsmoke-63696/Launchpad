@@ -32,3 +32,5 @@ public class Singleton {
         this.value = value;
     }  
 }
+
+//Q. Why line 8 Singleton object needs to be private ?
