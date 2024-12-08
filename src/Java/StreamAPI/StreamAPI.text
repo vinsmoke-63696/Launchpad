@@ -1,0 +1,31 @@
+Powerful tool for working with Collections and streams of data. Enables functional style programming for processing sequence 
+of elements.
+
+Key feature :
+    1. Supports Aggregate Operations -> filtering, mapping, reducing
+    2. Does Not Store Data, proceeses data on-Demand.
+    3. Usually Lazy -> Operations are not executed until a terminal operation is invoked
+    4. Unbounded -> Infinite data source, such as continuous input from sensor or generated sequence
+
+Operations on a stream (like filter, map) are not executed immediately. Instead, they form a pipeline of operations,   
+which gets executed only when a terminal operation (like collect, forEach, reduce) is invoked.
+
+Benefits over traditional code written on Collection ->
+Lazy:       Only processes data when necessary, improving performance.
+Efficient:  No intermediate storage, optimized for pipelines.
+
+============================================================================
+Steam API Components ->
+    1. Stream Creation Methods -> Stream.of(), Arrays.stream();
+    2. Stream Operations -> Aggregate operations (Intermediate + terminal), short-circuiting operations
+    3. Collectors -> Utility method to collect the results (toList(), groupingBy())
+    4. Parallel Streams & Sequential Streams
+
+============================================================================
+Intermediate Operations ->
+    filter, map, flatmap, distinct, sorted, peek, limit, skip
+
+Terminal Operations ->
+    collect, count, max, min, forEach, toArray, reduce, *findFirst, findAny, anyMatch, allMatch, noneMatch*
+
+* operations are also called as short-circuiting operations, meaning they stop processing once a condition is met
