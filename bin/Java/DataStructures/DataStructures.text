@@ -1,0 +1,22 @@
+2 types of Data structures in java.
+    1. Primitive (built-in data structures) 
+    2. Abstract data structures (libraries or collection framework)
+
+========================================================================
+Primitive -> int, float, double, char, boolean, byte, short, long, arrays
+
+collection -> List, Set, Map, Queue
+
+java.util package -> ArrayList, LinkedList, HashSet, LinkedHashSet, HashMap, LinkedHashMap
+                     TreeSet, TreeMap, HashTable
+
+There are many more but learn this as part of Interview
+=======================================================================
+
+1. int -> store whole number (default 0)
+2. float -> store decimal value with limited precision (default 0.0f)
+3. double -> store decimal value with huge/longer precision (default 0.0d)
+4. char -> unicode charachter '\u0000 to \uffff' (default \u0000 (null character))
+5. boolean -> true/false (default false)
+6. short -> smaller than int
+7. long -> longer than int
