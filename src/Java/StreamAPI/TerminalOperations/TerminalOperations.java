@@ -1,8 +1,6 @@
 package Java.StreamAPI.TerminalOperations;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -62,8 +60,6 @@ public class TerminalOperations {
     //9 AnyMatch, AllMatch, NoneMatch  -- check if any number is greater than 4
     boolean flag = List.of(2,4,6,8).stream().anyMatch(n -> n > 4 );
     System.out.println(flag);
-
-
 
     }
   
