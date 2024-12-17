@@ -31,7 +31,7 @@ public class TerminalOperations {
     System.out.println(output4.orElse(-1)); 
 
 
-    //find second highest
+    //find second highest -- update - code is incorrect
     Optional<Integer> op = input4.stream().sorted().limit(2).max((a,b) -> Integer.compare(a, b));
         System.out.println(op.orElse(-1));
 
