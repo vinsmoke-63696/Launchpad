@@ -1,5 +1,6 @@
 package Java.StreamAPI.IntermediateLevel;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -39,7 +40,15 @@ public class IntermediateLevel {
                     .collect(Collectors.toSet());
         System.out.println(outSet);
 
-        
+        String n = Arrays.asList("find longest word in sentence".split(" ")).stream()
+                         .collect(Collectors.maxBy(Comparator.comparing(a -> a.length()))).get().toString();
+                         System.out.println(n);
+                         
+        String p = Arrays.asList("find the longest word in sentence".split(" ")).stream()
+                        .max(Comparator.comparingInt(String::length)).get();
+                        System.out.println(p);                     
+                         
+                        
 
     }
 
