@@ -15,6 +15,14 @@
 
 ================================================================
 
+4. Achieves Multiple Inheritance 
+    Iterfaces allows multiple inheritance as the class implementing the two interfaces having same method name but abstract.
+    Implementing class has to provide the implementation of that abstract method, diamond problem does not come here.
+    However java 8+ has Default method in interfaces, this reintroduced diamond problem again.
+    To resolve this diamond problem, Java enforces the implementing class to MUST Override the method to resolve ambiguity.
+
+================================================================
+
 5. Supports Polymorphism -> 
     Interface vehicle { void buildCar();}  -> class Nano implements vehicle { public void buildCar(){sout("Nano built")}}
                                            -> class Sumo implements vehicle { public void buildCar(){sout("Sumo built")}}
