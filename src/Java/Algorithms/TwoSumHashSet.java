@@ -14,15 +14,10 @@ public class TwoSumHashSet {
 
     private List<List<Integer>> twoSum(int[] input, int target){
 
-        List<Integer> inputList = new ArrayList<>();
-        for(int i : input){
-            inputList.add(i);
-        }
-
         List<List<Integer>> output = new ArrayList<>();
-
         Set<Integer> set = new HashSet<>();
-        for(int i : inputList){
+        
+        for(int i : input){
             if(set.contains(target - i)){
                 List<Integer> subList = new ArrayList<>();
                 subList.add(Math.min(i, target-i));
