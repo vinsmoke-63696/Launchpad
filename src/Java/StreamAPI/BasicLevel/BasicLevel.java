@@ -15,7 +15,9 @@ public class BasicLevel {
     //Calculate sum of all numbers in list
     Integer sumAll = List.of(1,2,3,4,5,6).stream()
                                     .reduce(0, Integer::sum);
+    int sumAll2 = List.of(1,2,3,4,5,6).stream().reduce(0, (a,b) -> a+b).intValue();                          
         System.out.println(sumAll);
+        System.out.println(sumAll2);
 
     //find the count of string greater than length 5 in given list
     long count = List.of("Sam", "Altman","Junior", "Senior","nooby").stream()
