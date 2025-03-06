@@ -1,6 +1,7 @@
 package Java.StreamAPI.TerminalOperations;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,8 +33,10 @@ public class TerminalOperations {
 
 
     //find second highest -- update - code is incorrect
-    Optional<Integer> op = input4.stream().sorted().limit(2).max((a,b) -> Integer.compare(a, b));
+    Optional<Integer> op = input4.stream().sorted(Comparator.reverseOrder()).limit(2).min((a,b) -> Integer.compare(a, b));
+    int q = input4.stream().sorted(Comparator.reverseOrder()).skip(1).findFirst().get();
         System.out.println(op.orElse(-1));
+        System.out.println(q);
 
     //5. ForEach -- print all
     input4.stream().forEach( n -> System.out.print(n + " "));
