@@ -37,6 +37,9 @@
             ))
 
 3. Collectors.collectingAndThen
+    - It is a method used as "post-processing collector" , It allows you to :
+    1. First apply a collector (eg. toList(), toSet(), groupingBy())
+    2. Then apply a finisher function to modify or transform the result
 
  
  ============================================================
