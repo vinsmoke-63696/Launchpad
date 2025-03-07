@@ -1,0 +1,57 @@
+1. Collectors.joining 
+        -Syntax -> .collect(Collectors.joining(", "));
+        -Usage -> concatenate elements like employee names into a single String
+
+2. Collectors.groupingBy
+       - Comes with 3 flavours, based on number or args in it. From 1 to 3
+
+       1. groupingBy(Classifier)
+            - returns Map<K, List<V>> 
+            - K : key is extracted by classifier function
+            - V : List<V> default downstreamCollector is Collectors.toList()   Ie. :List<V>
+            - Uses HashMap<K, List<V>> by default
+
+            -Eg. Map<K, List<V>> result = stream().collect(Collectors.groupingBy(name -> name.charAt(0))); //default HashMap
+
+       2. groupingBy(Classifier, DownstreamCollector)
+            - returns Map<K, D> (Custom Downstream Collector)
+            - K : keys is extracted by classifier function
+            - V : aggregated using downstreamCollector
+
+            -Eg. Map<Character, Long> nameCounts = names.stream().collect(Collectors.groupingBy(
+                name -> name.charAt(0),
+                Collectors.counting()   //some more eg for this line -> Collectors.toSet(), Collectors.joining(", "), Collectors.summingInt()
+            ));
+
+        3. groupingBy(Classifier, mapFactory, downstreamCollector)
+            - returns custom Map<K, D> eg. (LinkedHashMap, Treemap)    
+            - K : keus is extracted by classifier function
+            - V : aggregated using downstreamCollector
+            - Map Type : Specified using mapFactory
+
+            -Eg. Preserve insertion order using LinkedHashMap
+            Map<Character, List<String>> orderMap = names.stream().collect(Collectors.groupingBy(
+                name -> name.charAt(0),
+                LinkedHashMap:: new,
+                Collectors.toList()
+            ))
+
+3. Collectors.collectingAndThen
+
+ 
+ ============================================================
+ Collectors - Use them when 
+    a. When you want to collect data from a Stream into a Collection (List, Set, Map, etc.)
+    b. When you need aggregation (counting, summing, averaging, joining, grouping, partitioning, etc.)
+
+============================================================
+Comparator - Use them when
+    a. When you want to compare two objects and define sorting logic
+    b. When sorting in ascending, descending, or custom order
+
+Comparator has 4 common methods
+
+1. Comparator.naturalOrder()  -> sorts using natural order -> Ascending order
+2. Comparator.reverseOrder()  -> sorts in reverseOrder     -> Descending order
+3. Comparator.comparing(Function)     -> Custom sorting logic -> Sort by string name
+4. Comparator.thenComparing(Function) -> Secondary Sorting -> Sort by name length, then alpabetically
