@@ -55,3 +55,18 @@ Injecting a bean in springboot.
     Cons -> More boilerplate when there are many dependencies.
     Use When -> Best practice
 
+===================
+
+Spring IOC Container - Transferring the control of object creation from application code to the spring IOC Container.
+    IOC Container Manages lifecycle and dependencies of beans
+    IOC Container injects dependencies using dependency injecton
+
+IOC Types -
+    1. BeanFactory (Lightweight)
+        1. Used in memory-constrained environments like mobile apps.
+        2. Lazy initialization (beans are created only when needed)
+
+    2. ApplicationContext (Recommended & widely used)
+        1. More powerful
+        2. Supports event propagation, declarative mechanism, ApplicationContext
+        3. Eager initialization (Created beans at startup)
