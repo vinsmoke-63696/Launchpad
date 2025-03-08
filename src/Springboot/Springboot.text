@@ -1,0 +1,57 @@
+1. @SpringBootApplication - Meta-annotation when applied to main class it is combines 3 annotatins :-
+    1. @Configuration - Marks the class as configuration class.
+    2. @EnableAutoConfiguration - Enables spring's auto configuration mechanism.
+    3. ComponantScan -> Scans the packages and sub-packages for spring components.
+
+@Component -> Marks java class as a Spring-Managed component. It is generic sterotype annotation. Allows spring to detect and register as a Bean.
+@Service -> Specialized version of @Component, used to indicate business/logic layer classes.
+@Repository -> Specialized version of @Component, used to indicate data access layer clasess. (e.g DAO)
+
+===============================================================================================================
+Injecting a bean in springboot.
+1. Field Level  -- using @Autowired on a field/ property
+2. Setter Based  -- using @Autowired on a setter method for any property
+3. Constructor Injection  -- Directly in Constructor
+
+----
+1. Field Level -> Least Recommended  ->
+
+        eg. public class UserService {
+            @Autowired
+            private UserRepository userRepository;
+        }
+    Pros -> Quick ans simple
+    Cons -> Mutable (Can't declare property as final) 
+    Use when -> Prototyping
+
+2. Setter Based -> 
+        eg. public class UserService{
+            
+            private UserRepository userRepository;
+
+            @Autowired
+            public void setUserRepository(UserRepository userRepository){
+                this.userRepository = userRepository
+            }
+        }
+
+    Pros -> Supports Optional dependencies (you can inject a default value if not provided)
+    Cons -> Still mutable, Not ideal for Required(Mandatory) dependencies
+    Use When -> When bean dependency is optional.
+
+3. Constructor Based -> Highly Recommended
+
+        eg. public class UserService{
+
+            private final UserRepository userRepository;
+
+            public UserService(UserRepository userRepository){
+                this.userRepository = userRepository;
+            }
+        }
+
+    Pros -> Ensures Immutability (userRepository is final), Mandatory dependencies are enforced (no risk of null values). 
+            No need for @Autowired (from spring 4.3+ if there is only one constructor)
+    Cons -> More boilerplate when there are many dependencies.
+    Use When -> Best practice
+
