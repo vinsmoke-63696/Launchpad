@@ -70,3 +70,63 @@ IOC Types -
         1. More powerful
         2. Supports event propagation, declarative mechanism, ApplicationContext
         3. Eager initialization (Created beans at startup)
+
+===================
+
+Bean lifecycle
+    1. Instantiation -> spring created an instance of the bean
+    2. dependency injection -> dependencies are injected into bean
+    3. bean ready to use
+    4. destruction
+
+    For @Component beans → When the application context is closed (context.close()).
+    For @Bean with destroyMethod → Runs automatically when the context is shutting down.
+
+===================
+
+@RestController vs. @Controller
+    @Controller -> Traditional Spring MVC Controller, used to return HTML pages or views.
+                    Requires @ResponseBody to return raw data (JSON, XML etc) 
+    
+    @RestController -> Specifically for RESTful API Controller.
+                    Combines @Controller + @ResponseBody
+                    Used for Restful web services (returns JSON or XML Directly)
+                    No need for @ResponseBody on each method, it comes built-in
+
+===================
+
+Exception Handling in Spring
+
+3 Main Approches, all based on scope
+        Approach                    -> scope                          -> Desciption
+    1. @ExceptionHandler            -> Local (Single Controller)      -> Handles exceptions in a specific Controller
+    2. @ControllerAdvice            -> Global (All Controller)        -> Centralized Exception handling across controllers
+    3. @HandlerExceptionResolver    -> Global/Entire Application (All Requests)  -> fine grained, low level (error pages when app is down)  
+
+1. @ExceptionHandler
+    written inside a controller - eg.
+    
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    Returns customer error response (404 NOT Found)
+
+2. @ControllerAdvice / @RestControllerAdvice
+    If multiple controllers need the same exception handling logic, we use @ControllerAdvice to centralize exception handling.
+
+    @RestControllerAdvice  // Alternative to @ControllerAdvice (for REST APIs)
+    public class GlobalExceptionHandler {
+
+        @ExceptionHandler(UserNotFoundException.class)
+        public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException ex) {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        }
+
+        @ExceptionHandler(Exception.class)
+        public ResponseEntity<String> handleGenericException(Exception ex) {
+            return new ResponseEntity<>("Something went wrong: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
