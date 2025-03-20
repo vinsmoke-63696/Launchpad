@@ -29,3 +29,15 @@ Terminal Operations ->
     collect, count, max, min, forEach, toArray, reduce, *findFirst, findAny, anyMatch, allMatch, noneMatch*
 
 * operations are also called as short-circuiting operations, meaning they stop processing once a condition is met
+
+============================================================================
+
+toMap has 3 overloads ->
+toMap(keyMapper,valueMapper) 
+toMap(keyMapper,valueMapper, mergeFunction)  --> mergeFunction to work on duplicate keys (existing,replacement) -> replacement 
+toMap(keyMapper, valueMapper,MapSupplier)
+
+groupingBy has 3 overloads ->
+groupingBy(classifier)
+groupingBy(classiier,downstream collector)
+groupingBy(classifier, mapFactory, downstream collector)
