@@ -1,0 +1,62 @@
+Longest non repetitive character substring in a string.
+
+class main { publis static void main(String[] args) { System.out.println("Hello"); } } 
+Use SOLID principle of Liskov substitution principle where break functionality,
+
+Difference between JPA and hibernate
+Types of isolation level in transaction
+
+What are the Types of IOC containers?
+
+Types of Streams in java 8
+
+Difference between Optional.of() and Optional.ofNullable()
+
+Difference between Setter and constructor injection
+
+Tell me bean life cycle
+
+internal working of Hashmap,Array list Linked List
+
+Hibernate connections eager lazy
+
+transactional property
+
+Spring bean type
+
+Count the email domains List employees = new ArrayList<>(); 
+employees.add(new Employee("A", "A@google.com")); employees.add(new Employee("b", "b@gmail.com")); 
+employees.add(new Employee("C", "C@google.com")); employees.add(new Employee("D", "D@yahoo.com"));
+
+
+can we have two config file one xml and one java
+
+multithreading, synchronization, and thread safety
+
+Print out the most frequent letters in a string using stream
+
+How Do you implement observer design pattern?
+
+Given the fibonacci sequence array, sort the array with all the odd numbers at the begining 
+and the non even numbers at the end. Don’t use any temp array.
+
+
+Collections API. HashMap, importance of hashCode and equals methods, how hashmap put a new entry and gets it (buckets) 
+
+Coding challenge: Given a non-negative number represented as an array of digits, 
+add 1 to the number ( increment the number represented by the digits ). 
+The digits are stored such that the most significant digit is first element of array.
+
+Difference between @Interceptor and @Filter in Spring Boot
+
+How Spring Security Works in Authentication and Authorization
+
+Dependency Injection Process
+
+Intermediate Functions in Streams
+
+Explanation of collect(Collectors.groupingBy(Function.identity(), vs Collectors.counting()))
+
+@ConditionalOnBean Property Example in Code
+
+Difference between @Pointcut and @Advice

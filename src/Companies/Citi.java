@@ -36,6 +36,7 @@ public static void main(String[] args) {
                                     "Narendra Modi",
                                     "Devendra Fadanvis");
     list.stream().sorted(Comparator.comparing(s-> s.split(" ")[1]));
-    
+	//List.of()
+ 
 }
 }
