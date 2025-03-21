@@ -1,0 +1,31 @@
+A. Decomposition Patterns (How to split microservices)
+    1. Domain-Driven-Design -> split based on business domain, eg. Credit, Debit,Refund etc.
+  ✔ 2. Strangler Pattern    -> step by step approach to migrate monolith to microservice.
+    3. Bulkhead Pattern     -> isolate microservices in a way that one service failure does not impact other
+
+
+B. Communication Pattern (How they communicate)
+  ✔ 1. API Gateway          -> single entry point for external clients, routes requests to correct service
+    2. Service Registry & Discovery -> locate microservices dynamically Eg. Eureka, Feign.
+  ✔ 3. Circuit Breaker      -> Stops cascading effect by stopping requests to failing service
+    4. Retry Pattern        -> Automatic retry mechanism for failed requests.
+
+
+C. Data Management Pattern (How they manage data)
+  ✔ 1. Database per service -> each service has own database
+    2. Saga                 -> manages distributed transactions accross services using event based mechanism
+    3. CQRS (bullshit)      -> separate read and write for better performance
+    4. Event sourcing(bullshit) -> store system state as sequence of events rather than traditional db update
+    
+
+D. Observability Pattern (How they are monitored)
+  ✔ 1. Log aggregation      -> splunk and cloudwatch
+  ✔ 2. health check & monitoring -> Spring Actuators
+
+
+E. Security Patterns (How they are secured)
+  ✔ 1. Token based authentication -> OAuth2
+  ✔ 2. API gateway security  -> authentication/authorization at gateway level
+  ✔ 3. Zero trust security   -> internal/external, all requests are verified
+
+ 
