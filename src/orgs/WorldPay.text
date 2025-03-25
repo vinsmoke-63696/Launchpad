@@ -1,0 +1,37 @@
+why need functional interface even though we have normal interface
+name some functional interfaces
+how can I avoid breaking singleton if I try to break using clone and reflection
+what makes a class immutable, write a code to make class immutable
+key collision in hasmap and what happens if keys collide ?
+whats the purpose of having tostring and hashcode methods 
+sql statement, execute, execute update, prepared statement. how to call a SP in java
+inter thread communication
+lock on class and lock on method tell difference
+code to sort the keys in hashmap
+code to print occurance of characters in string
+name some intermediate operation and terminal operations
+some handful methods of string, name as much as you can -> I said joining, split
+What is iterator and what is spliterator, on what basis a spliterator splits the iterator ?
+
+
+public static void main(String[] args) {
+         Map<String, Integer> studentMap = new HashMap<String, Integer>();
+         
+    studentMap.put("Jyous", 87);
+    studentMap.put("Klusener", 82);
+    studentMap.put("Xiangh", 91);
+    studentMap.put("Lisa", 89);
+    studentMap.put("Narayan", 95);
+    studentMap.put("Arunkumar", 86);
+
+    //studentMap.entrySet().stream().sorted(Comparator.comparing()).forEach(e->System.out.println(e.getKey()));
+
+    List<String> list = List.of("a","b","c","a");
+        
+        Map<String, Long> op = list.stream().collect(Collectors.groupingBy(
+            n -> n.toString(),
+            Collectors.counting()
+        ));
+        System.out.println(op);
+
+}

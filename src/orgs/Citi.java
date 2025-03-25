@@ -1,4 +1,4 @@
-package Companies;
+package orgs;
 
 import java.util.Arrays;
 import java.util.Comparator;
