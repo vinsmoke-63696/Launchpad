@@ -15,3 +15,18 @@ public class A extends B implements Runnable{}
 
 ---------------------------------------------------------------------------------
 Bonus Tip :- Thread class itself implements Runnable Interface
+---------------------------------------------------------------------------------
+Methods -> 
+
+sleep, run, start, interrupt (interrupts given state of thread), 
+yeild (hints scheduler that current thread is willing to yeild its current use of processor. scheduler is free to ignore this hint )
+setDaemon (background thread -> JVM does not wait for completion of the daemon thread )
+
+==================================================================================
+
+Synchronized method or Synchronized block 
+    -> Intrinsic locking, easy to use, just keywords, Lock is automatically released when thread exits the Synchronized method
+     or block, even if an exception occurs.
+    -> No try-lock, there is blocking, if say first thread is taking longer to exit Synchronized block, all the following threads
+     are going to wait. This is not good.
+    -> you can't specify a timeout for acquiring a lock 
