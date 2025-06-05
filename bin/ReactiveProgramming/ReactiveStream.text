@@ -1,0 +1,40 @@
+Reactive Stream Specification :-
+4 Interfaces -> Publisher, Subscriber, Subscription, Processor
+
+========================================
+public interface Publisher<T>{
+    public void subscribe(Subscriber<? super T> s);
+}
+
+========================================
+public interface Subscriber<T>{
+    public void onSubscribe(Subscription s);
+    public void onNext(T t);
+    public void onError(Throwable t);
+    public void onComplete();
+}
+
+=========================================
+public interface Subscription{   --- Subscription represents unique relation between Subscriber and Publisher
+    public void request(long n);
+    public void cancel();
+} 
+
+=========================================
+public interface Processor<T,R> exnteds Subscriver<T>, Publisher<R>{
+    //A processor represents a processing stage - which both Subscriber And Publisher and Must obey the contracts of both
+    //meaning it extends both Publisher and Subscriber
+} 
+
+===========================================
+
+How it works ->
+1. You have a publisher and subscriber -> subscriber will invoke Subscribe() method of Publisher and pass the instance of
+   subscriber as input.
+2. Publisher is going to send a Subscription() event as a confirmation.
+3. Subscriber calls request(long n ) method of Subscription interface to get the data from publisher.
+4. Publisher will send the data stream by invoking onNext(T t) method of Subscriber.
+5. If publisher has for example 10 records, then it will call onNext(T t) method 10 times.
+6. Once all the records are received by subscriber, publisher will invoke onComplete() method of subscriber.
+7. if any error, publisher will fire onError() method.
+8. Subscriber can also control the events, data it wants, by sending value in request(long value) method.
