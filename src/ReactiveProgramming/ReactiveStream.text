@@ -38,3 +38,11 @@ How it works ->
 6. Once all the records are received by subscriber, publisher will invoke onComplete() method of subscriber.
 7. if any error, publisher will fire onError() method.
 8. Subscriber can also control the events, data it wants, by sending value in request(long value) method.
+
+
+==========================================
+
+Rest API Vs. Functional Endpoint from Reactive Java
+
+RestAPI             -> Client -> Controller -> Service 
+Functional Endpoint -> Client -> Router     -> Handler 
