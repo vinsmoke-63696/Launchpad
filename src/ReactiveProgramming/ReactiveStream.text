@@ -46,3 +46,17 @@ Rest API Vs. Functional Endpoint from Reactive Java
 
 RestAPI             -> Client -> Controller -> Service 
 Functional Endpoint -> Client -> Router     -> Handler 
+
+==========================================
+Handler has a return type of Mono<ServerResponse> and pass the ServerRequest object as parameter.
+while returning build a ServerResponse with body.
+
+Router has a @Configuration annotation and it has a @Bean on RouterFunction<ServerResponse> routerFunction(){
+    return RouterFunctions.route()
+    .GET("/router/customer", handler::getCustomers)
+    .POST("/router/savecustomer", handler::saveCustomer)
+    .build();
+}
+
+In short router has a set of APIs associated with each handler method. And handler method returns the type as ServerResponse.
+ServerResponse is returned as Mono type from the handler to the router. 
