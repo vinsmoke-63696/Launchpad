@@ -1,0 +1,15 @@
+Rules ->
+1. ignore constants 
+2. consider only largest
+
+
+example -> f(n) = n^2 + 3n +1;
+then complexity is O(n^2)
+============================================
+1. Always worst case is considered O(), however there are Average case Theta() and best case omega() too
+
+===========================================
+Time complexities from best to worst 
+O(1) Best -> O(log n) -> O(n) -> O(n log n) -> O(n^2) -> O(n^3) -> O(2^n) Recurssion -> O(n!)
+
+===========================================
