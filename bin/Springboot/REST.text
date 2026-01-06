@@ -1,0 +1,252 @@
+REST, STATELESSNESS, SPRING BOOT & TOMCAT — CONSOLIDATED NOTES
+==============================================================
+
+--------------------------------------------------------------
+1. REST — WHAT IT REALLY IS
+--------------------------------------------------------------
+
+REST (Representational State Transfer) is an ARCHITECTURAL STYLE, not a protocol.
+
+- It defines constraints, not implementation
+- Usually implemented over HTTP, but not tied to HTTP
+- Goal: scalable, resilient, evolvable systems
+
+REST Constraints:
+1. Client–Server separation
+2. Statelessness
+3. Cacheable responses
+4. Uniform interface
+5. Layered system
+6. Code-on-demand (optional, rarely used)
+
+--------------------------------------------------------------
+2. STATELESSNESS — THE FOUNDATION
+--------------------------------------------------------------
+
+Definition:
+Server does NOT remember client-specific interaction state between requests.
+
+Each request:
+- is self-contained
+- carries authentication, identity, intent
+- can be served by any instance
+
+Statelessness does NOT mean:
+- no database
+- no transactions
+- no side effects
+
+Allowed in stateless systems:
+- persistent database state
+- transactions per request
+- idempotency records
+- caches
+
+Forbidden:
+- HttpSession
+- in-memory user context
+- conversational workflow state
+
+--------------------------------------------------------------
+3. EFFECTS OF STATELESSNESS (4 CORE OUTCOMES)
+--------------------------------------------------------------
+
+1. Horizontal Scaling
+- Any instance can handle any request
+- No sticky sessions
+- Auto-scaling works naturally
+
+2. No Sticky Sessions
+- Load balancers stay simple
+- No client–server affinity
+- Easy deployments and rollouts
+
+3. Crash Safety & Retries
+- Instance failure ≠ user-visible failure
+- Requests can be retried safely
+- Works perfectly with cloud infrastructure (Kubernetes, AWS Lambda)
+
+4. Simple Load Balancing
+- Round-robin and least-connections work
+- No session tracking
+- Predictable and cheap infrastructure
+
+--------------------------------------------------------------
+4. REST VS STATELESS ARCHITECTURE
+--------------------------------------------------------------
+
+Overlap:
+- No server-side sessions
+- Self-contained requests
+- Retry-safe
+- Horizontally scalable
+
+Differences:
+
+REST:
+- Full architectural style
+- Resource-based
+- Uniform interface
+- Cache semantics
+- Typically HTTP-based
+- RPC style discouraged
+
+Stateless Architecture:
+- Single architectural principle
+- Not tied to HTTP
+- No resource requirement
+- RPC allowed
+- Used in SOAP, gRPC, MQ systems
+
+Key Insight:
+REST requires statelessness.
+Statelessness does NOT require REST.
+
+--------------------------------------------------------------
+5. CACHEABLE SEMANTICS (REST-SPECIFIC)
+--------------------------------------------------------------
+
+Meaning:
+Responses explicitly declare IF and HOW they can be cached.
+
+Why REST cares:
+- Enables safe caching by browsers, CDNs, API gateways
+- Prevents stale or unsafe caching
+- Critical for internet-scale systems
+
+How caching is controlled:
+- Cache-Control headers
+- ETag / If-None-Match
+- Last-Modified
+
+Examples:
+- Product catalog → cacheable
+- Payments, balances → no-store
+
+--------------------------------------------------------------
+6. UNIFORM INTERFACE (REST-SPECIFIC)
+--------------------------------------------------------------
+
+Meaning:
+Same rules everywhere so tools and intermediaries can understand APIs.
+
+Components:
+1. Resource-based URLs (nouns, not verbs)
+2. HTTP methods with fixed semantics (GET, POST, PUT, DELETE)
+3. Self-descriptive messages (headers, content-type)
+4. HATEOAS (optional, rarely used in practice)
+
+Why it matters:
+- Caching works correctly
+- Gateways retry safely
+- Proxies and tools can reason about traffic
+- Less custom logic per endpoint
+
+--------------------------------------------------------------
+7. SOAP VS REST IN REAL PAYMENT SYSTEMS
+--------------------------------------------------------------
+
+Key truth:
+SOAP systems scaled because of ARCHITECTURE, not SOAP itself.
+
+How large SOAP payment systems worked:
+- Message completeness (each request fully self-contained)
+- No server-side sessions
+- All state stored in databases
+- Strong idempotency (STAN, RRN, message IDs)
+- Async internal processing with sync facade
+
+Why SOAP was good for payments:
+- Strong contracts (WSDL + XSD)
+- Schema validation before execution
+- Transport flexibility
+- Message-level security
+
+Insight:
+REST did not invent statelessness.
+REST standardized and simplified it.
+
+--------------------------------------------------------------
+8. SPRING MVC TO SPRING BOOT EVOLUTION
+--------------------------------------------------------------
+
+Spring MVC:
+- DispatcherServlet is the front controller
+- Still a plain Servlet
+- Routes all requests to controllers
+
+Pre-Spring Boot:
+- WAR packaging
+- External Tomcat
+- Heavy XML configuration
+- Manual deployment
+
+Spring Boot shift:
+- Application starts itself
+- Embedded server
+- JAR packaging
+- Convention over configuration
+- Same servlet model underneath
+
+--------------------------------------------------------------
+9. SPRING BOOT AUTOCONFIGURATION
+--------------------------------------------------------------
+
+Definition:
+Conditional configuration based on classpath, beans, and properties.
+
+Decision signals:
+1. Classpath (what libraries are present)
+2. User-defined beans (user always wins)
+3. Configuration properties
+
+Core mechanism:
+- @SpringBootApplication
+- @EnableAutoConfiguration
+- Conditional annotations:
+  - @ConditionalOnClass
+  - @ConditionalOnMissingBean
+  - @ConditionalOnProperty
+
+Debugging tools:
+- debug=true
+- /actuator/conditions
+- Reading *AutoConfiguration classes
+
+--------------------------------------------------------------
+10. TOMCAT — IN DEPTH
+--------------------------------------------------------------
+
+What Tomcat is:
+A Servlet container + HTTP server.
+It converts network bytes into HttpServletRequest and HttpServletResponse.
+
+Internal architecture:
+Server
+ └ Service
+   ├ Connector
+   └ Engine
+     └ Host
+       └ Context
+         └ Wrapper (Servlet)
+
+--------------------------------------------------------------
+11. TOMCAT THREADING MODEL
+--------------------------------------------------------------
+
+Model:
+One request is handled by one thread from a bounded thread pool.
+
+Why threads are predictable:
+- Fixed upper bound
+- Threads are reused
+- No per-request thread creation
+- Blocking is explicit and visible
+
+--------------------------------------------------------------
+FINAL SUMMARY
+--------------------------------------------------------------
+
+REST formalizes stateless architecture.
+Spring Boot automates it.
+Tomcat executes it predictably.
