@@ -1,0 +1,33 @@
+public interface Iterable<T>
+It is a root interface for anything that can be iterated.
+
+Methods available in Iterable
+1. Iterator<T> iterator();   -> Single Abstract Method -> Returns Iterator
+2. default void forEach(Consumer<? super T> action)   -> default Method
+3. default Spliterator<T> spliterator()    -> default Method (used in stream API for paraller processing)
+
+Iterable has NO static methods, NO private methods
+----------------------------------------------------------------------------------------------
+
+Iterable<String> iterable = List.of("Java", "Python","Ruby");
+
+This is valid because of polymorphism -> List interface extends Collection interface which again extends Iterable Interface.
+
+So the hierarchy becomes as "every List IS-A Iterable"
+
+Iterable
+   ↑
+Collection
+   ↑
+List
+
+Logical explanation ->
+public interface List<E> extends Collection<E>
+public interface Collection<E> extends Iterable<E>
+---------------------------------------------------------------------------------------------
+List,Set,Queue falls under this catagory. Not MAP
+---------------------------------------------------------------------------------------------
+
+Iterator<T> iterator() this is a powerful factory method, that returns new Iterator each time.
+This is important because Every call returns a fresh, independent iterator with its own state. 
+This enables nested loops, parallel processing.
