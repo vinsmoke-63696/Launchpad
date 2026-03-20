@@ -1,4 +1,4 @@
-package Java.DesignPatterns.FactoryPattern;
+package Java.DesignPatterns.Creational.FactoryPattern;
 public class ModelFactory {
 
     public VehicleInterface getYourCar(String model){
